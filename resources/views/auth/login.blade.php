@@ -178,8 +178,8 @@
         </div>
     @endif
 
-    <form action="{{ url('/proseslogin') }}" method="POST">
-        @csrf
+    <form action="{{ secure_url('/proseslogin') }}" method="POST">
+    @csrf
 
         <div class="form-group">
             <div class="input-wrapper">
