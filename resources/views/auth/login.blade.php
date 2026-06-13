@@ -178,7 +178,7 @@
         </div>
     @endif
 
-    <form action="{{ secure_url('/proseslogin') }}" method="POST">
+    <form action="/proseslogin" method="POST">
     @csrf
 
         <div class="form-group">
