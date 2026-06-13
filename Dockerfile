@@ -10,9 +10,12 @@ RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framewor
 
 RUN chmod -R 775 storage bootstrap/cache
 
+RUN touch database/database.sqlite
+
 RUN php artisan config:clear
 RUN php artisan route:clear
 RUN php artisan view:clear
+RUN php artisan migrate --force
 
 ENV WEBROOT=/var/www/html/public
 ENV PORT=8080
