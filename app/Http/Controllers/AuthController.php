@@ -9,21 +9,23 @@ class AuthController extends Controller
 {
     public function proseslogin(Request $request)
     {
+        if ($request->isMethod('get')) {
+            return redirect('/');
+        }
 
         if (Auth::guard('karyawan')->attempt([
             'nik' => $request->nik,
             'password' => $request->password
         ])) {
 
+            $request->session()->regenerate();
+
             $user = Auth::guard('karyawan')->user();
 
-            // LOGIN ADMIN
             if ($user->role == 'admin') {
-
                 return redirect('/admin/dashboard');
             }
 
-            // LOGIN KARYAWAN
             return redirect('/dashboard');
         }
 
@@ -31,19 +33,18 @@ class AuthController extends Controller
             ->with('warning', 'NIK / Password Salah');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::guard('karyawan')->logout();
 
-        request()->session()->invalidate();
-
-        request()->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect('/');
     }
 
-    public function proseslogout()
+    public function proseslogout(Request $request)
     {
-        return $this->logout();
+        return $this->logout($request);
     }
 }

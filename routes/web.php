@@ -15,7 +15,8 @@ Route::get('/', function () {
     return view('auth.login');
 })->name('login');
 
-Route::post('/proseslogin', [AuthController::class, 'proseslogin']);
+Route::match(['get', 'post'], '/proseslogin', [AuthController::class, 'proseslogin'])
+    ->name('proseslogin');
 
 /*
 |--------------------------------------------------------------------------
