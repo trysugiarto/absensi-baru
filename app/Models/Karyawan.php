@@ -19,13 +19,15 @@ class Karyawan extends Authenticatable
 
     protected $keyType = 'string';
 
-    protected $fillable = [
-        'nik',
-        'nama_lengkap',
-        'jabatan',
-        'no_hp',
-        'password',
-    ];
+  protected $fillable = [
+    'nik',
+    'nama_lengkap',
+    'jabatan',
+    'no_hp',
+    'password',
+    'role',
+    'foto',
+];
 
     protected $hidden = [
         'password',
