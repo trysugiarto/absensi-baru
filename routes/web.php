@@ -1,1 +1,111 @@
-<?php use Illuminate\Support\Facades\Route; use App\Http\Controllers\AuthController; use App\Http\Controllers\DashboardController; use App\Http\Controllers\PresensiController; /* |-------------------------------------------------------------------------- | LOGIN |-------------------------------------------------------------------------- */ Route::get('/', function () { return view('auth.login'); })->name('login'); /* |-------------------------------------------------------------------------- | PROSES LOGIN |-------------------------------------------------------------------------- */ Route::post('/proseslogin', [AuthController::class, 'proseslogin']) ->name('proseslogin'); /* |-------------------------------------------------------------------------- | REDIRECT JIKA BUKA /proseslogin MANUAL |-------------------------------------------------------------------------- */ Route::get('/proseslogin', function () { return redirect('/'); }); /* |-------------------------------------------------------------------------- | AUTH KARYAWAN |-------------------------------------------------------------------------- */ Route::middleware(['auth:karyawan'])->group(function () { /* |-------------------------------------------------------------------------- | DASHBOARD |-------------------------------------------------------------------------- */ Route::get('/dashboard', [DashboardController::class, 'index']); Route::get('/admin/dashboard', [DashboardController::class, 'admin']); /* |-------------------------------------------------------------------------- | LOGOUT |-------------------------------------------------------------------------- */ Route::get('/logout', [AuthController::class, 'logout']); /* |-------------------------------------------------------------------------- | PRESENSI |-------------------------------------------------------------------------- */ Route::get('/presensi/create', [PresensiController::class, 'create']); Route::post('/presensi/store', [PresensiController::class, 'store']); /* |-------------------------------------------------------------------------- | LAPORAN |-------------------------------------------------------------------------- */ Route::get('/laporan', [PresensiController::class, 'laporan']); /* |-------------------------------------------------------------------------- | CALENDAR |-------------------------------------------------------------------------- */ Route::get('/calendar', function () { return view('presensi.calendar'); }); }); /* |-------------------------------------------------------------------------- | FALLBACK |-------------------------------------------------------------------------- */ Route::fallback(function () { return redirect('/'); });
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\EditProfileController;
+
+/*
+|--------------------------------------------------------------------------
+| LOGIN
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', function () {
+    return view('auth.login');
+})->name('login');
+
+/*
+|--------------------------------------------------------------------------
+| PROSES LOGIN
+|--------------------------------------------------------------------------
+*/
+
+Route::post('/proseslogin', [AuthController::class, 'proseslogin'])
+    ->name('proseslogin');
+
+/*
+|--------------------------------------------------------------------------
+| REDIRECT JIKA BUKA /proseslogin MANUAL
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/proseslogin', function () {
+    return redirect('/');
+});
+
+/*
+|--------------------------------------------------------------------------
+| AUTH KARYAWAN
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth:karyawan'])->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | DASHBOARD
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    Route::get('/admin/dashboard', [DashboardController::class, 'admin']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOGOUT
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/logout', [AuthController::class, 'logout']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | PRESENSI
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/presensi/create', [PresensiController::class, 'create']);
+
+    Route::post('/presensi/store', [PresensiController::class, 'store']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | LAPORAN
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/laporan', [PresensiController::class, 'laporan']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | EDIT PROFILE
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/editprofile', [EditProfileController::class, 'index']);
+
+    Route::post('/editprofile/update', [EditProfileController::class, 'update']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | CALENDAR
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/calendar', function () {
+        return view('presensi.calendar');
+    });
+});
+
+/*
+|--------------------------------------------------------------------------
+| FALLBACK
+|--------------------------------------------------------------------------
+*/
+
+Route::fallback(function () {
+    return redirect('/');
+});

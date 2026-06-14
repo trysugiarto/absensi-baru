@@ -9,6 +9,9 @@
 
     <meta name="theme-color" content="#233E86">
 
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#1d4ed8">
+
     <title>E-Absensi</title>
 
     <link rel="icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}">
@@ -38,13 +41,18 @@
             min-height: 100vh;
             background: #233E86;
             padding: 35px 22px 25px;
+
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
         .login-logo {
             width: 145px;
             margin-bottom: 25px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .login-title {
@@ -52,6 +60,8 @@
             font-size: 32px;
             font-weight: 800;
             margin-bottom: 6px;
+            text-align: center;
+            width: 100%;
         }
 
         .login-subtitle {
@@ -59,6 +69,13 @@
             font-size: 17px;
             font-weight: 700;
             margin-bottom: 26px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 700px;
         }
 
         .form-group {
@@ -157,6 +174,8 @@
         .alert {
             border-radius: 12px;
             font-size: 14px;
+            width: 100%;
+            max-width: 700px;
         }
     </style>
 </head>
@@ -170,7 +189,10 @@
          alt="Logo Absensi">
 
     <h1 class="login-title">E-Absensi</h1>
-    <div class="login-subtitle">Silahkan Login</div>
+
+    <div class="login-subtitle">
+        Silahkan Login
+    </div>
 
     @if(Session::has('warning'))
         <div class="alert alert-danger">
@@ -178,12 +200,17 @@
         </div>
     @endif
 
-    <form action="{{ route('proseslogin') }}" method="POST">
-    @csrf
+    <form action="{{ route('proseslogin') }}"
+          method="POST"
+          class="login-form">
+
+        @csrf
 
         <div class="form-group">
             <div class="input-wrapper">
-                <ion-icon name="person-outline" class="input-icon"></ion-icon>
+
+                <ion-icon name="person-outline"
+                          class="input-icon"></ion-icon>
 
                 <input type="text"
                        name="nik"
@@ -191,12 +218,15 @@
                        placeholder="NIK"
                        autocomplete="off"
                        required>
+
             </div>
         </div>
 
         <div class="form-group">
             <div class="input-wrapper">
-                <ion-icon name="key-outline" class="input-icon"></ion-icon>
+
+                <ion-icon name="key-outline"
+                          class="input-icon"></ion-icon>
 
                 <input type="password"
                        name="password"
@@ -209,19 +239,26 @@
                 <ion-icon id="togglePassword"
                           name="eye-off-outline"
                           class="eye-icon"></ion-icon>
+
             </div>
         </div>
 
-        <a href="#" class="forgot">Forgot Password?</a>
+        <a href="#" class="forgot">
+            Forgot Password?
+        </a>
 
         <button type="submit" class="btn-login">
             Log in
         </button>
+
     </form>
 
     <div class="footer-logo">
         <img src="{{ asset('assets/img/login/logo.png') }}" alt="Logo PT">
-        <span>PT PRABU PERMANA PUTRA</span>
+
+        <span>
+            PT PRABU PERMANA PUTRA
+        </span>
     </div>
 
 </div>
@@ -230,24 +267,45 @@
 <script src="{{ asset('assets/js/lib/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/lib/bootstrap.min.js') }}"></script>
 
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script type="module"
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js">
+</script>
+
+<script nomodule
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js">
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+
         const password = document.getElementById("password");
         const toggle = document.getElementById("togglePassword");
 
         toggle.addEventListener("click", function () {
+
             if (password.type === "password") {
+
                 password.type = "text";
                 toggle.setAttribute("name", "eye-outline");
+
             } else {
+
                 password.type = "password";
                 toggle.setAttribute("name", "eye-off-outline");
             }
         });
     });
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+
+    navigator.serviceWorker.register('/sw.js')
+        .then(function () {
+
+            console.log('Service Worker registered');
+        });
+}
 </script>
 
 </body>
