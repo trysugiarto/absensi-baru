@@ -1,9 +1,0 @@
-{
-    "name": "E-Absensi",
-    "short_name": "Absensi",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#0d6efd",
-    "icons": []
-}
