@@ -3,6 +3,7 @@
   "short_name": "Absensi",
   "description": "Aplikasi Absensi Online",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1d4ed8",
